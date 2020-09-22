@@ -2,6 +2,24 @@
 
 > BBR
 
+kernel version >= 4.9.x
+
+```bash
+echo "net.core.default_qdisc=fq" >> /etc/sysctl.conf
+echo "net.ipv4.tcp_congestion_control=bbr" >> /etc/sysctl.conf
+
+sysctl -p
+```
+
+```bash
+sysctl net.ipv4.tcp_available_congestion_control
+
+# net.ipv4.tcp_available_congestion_control = bbr cubic reno
+
+lsmod | grep bbr
+# tcp_bbr                20480  14
+```
+
 ## network
 
 > ipv6 隧道
@@ -12,46 +30,166 @@
 
 <https://github.com/xtaci/kcptun/>
 
-## user
+> frp
 
-> 禁用 root
+<https://github.com/fatedier/frp>
 
-> 用户组权限配置
+### Users_and_groups
+
+`root`
+
+根用户
+
+nologin
+
+`lux`
+
+主用户
+
+sudo
+
+ssh
+
+/home/lux
+
+`sync`
+
+同步用户
+
+ssh
+
+nologin?
+
+/home/sync
+
+`watchman`
+
+守护用户
+
+nologin
+
+```bash
+# lux
+useradd -m lux
+passwd
+### /etc/sudoers
+visudo
+#### lux    ALL=(ALL:ALL) ALL
+usermod -s /bin/zsh lux
+# sync
+useradd -m sync
+passwd
+# watchman
+useradd -r -s /usr/bin/nologin watchman
+passwd
+```
+
+### ssh
+
+`/etc/ssh/sshd_config`
+
+```ssh-config
+Port 22
+
+# 禁止空密码账户登入（默认禁止）
+PermitEmptyPasswords no
+
+# 禁止 root 账户通过 SSH 登入
+PermitRootLogin no
+```
 
 ## application
 
-> nginx
+> ### nginx
+
+<http://nginx.org/en/download.html>
+
+<https://www.digitalocean.com/community/tools/nginx>
+
+[brotli](https://github.com/google/ngx_brotli)
 
 ```bash
-wget http://nginx.org/download/nginx-1.14.2.tar.gz
-tar -xvzf nginx-1.14.2.tar.gz
+wget http://nginx.org/download/nginx-1.19.2.tar.gz
+tar -xvzf nginx-1.19.2.tar.gz
 
-git clone https://github.com/eustas/ngx_brotli.git
-cd ngx_brotli
+### ngx_brotli
+git clone https://github.com/google/ngx_brotli.git /usr/local/src/ngx_brotli
 git submodule update --init
 
+# + using system PCRE library
+# + using system OpenSSL library
+# + using system zlib library
+
+apt-get install libpcre3 libpcre3-dev
+apt-get install zlib1g-dev
+apt-get install openssl libssl-dev
 
 ./configure --add-module=/usr/local/src/ngx_brotli
+
+./configure --add-module=/usr/local/src/ngx_brotli --with-http_stub_status_module --with-http_ssl_module --with-http_v2_module
+
 make && make install
-./configure --add-module=/usr/local/src/ngx_brotli --with-http_stu    b_status_module --with-http_ssl_module
-./configure --add-module=/usr/local/src/ngx_brotli --with-http_stu    b_status_module --with-http_ssl_module --with-http_v2_module
 
 nginx -V
 ```
 
-```bash
-nginx version: nginx/1.14.2
-built by gcc 4.8.5 20150623 (Red Hat 4.8.5-36) (GCC)
-built with OpenSSL 1.0.2k-fips  26 Jan 2017
+`nginx -V`
+
+```
+nginx version: nginx/1.19.2
+built by gcc 8.3.0 (Debian 8.3.0-6)
+built with OpenSSL 1.1.1d  10 Sep 2019
 TLS SNI support enabled
 configure arguments: --add-module=/usr/local/src/ngx_brotli --with-http_stub_status_module --with-http_ssl_module --with-http_v2_module
 ```
 
-> ssl
+`迪菲-赫尔曼密钥`
+
+```bash
+openssl dhparam -out /etc/ssl/certs/dhparams.pem 2048
+```
+
+`nginx config`
+
+```nginx
+  ssl_dhparam /etc/ssl/certs/dhparams.pem;
+  ssl_ciphers "!DSS";
+```
+
+> ### ssl
 
 <https://github.com/acmesh-official/acme.sh>
 
+```bash
+curl  https://get.acme.sh | sh
+```
+
+```bash
+### nginx
+acme.sh --issue -d 0x64.ml --nginx
+### webroot
+acme.sh --issue -d 0x64.ml -d www.0x64.ml --webroot /var/www/0x64.ml/
+### installcert
+acme.sh --installcert -d 0x64.ml \
+--key-file       /usr/local/nginx/ssl/0x64.ml/key.pem  \
+--fullchain-file /usr/local/nginx/ssl/0x64.ml/cert.pem \
+--reloadcmd     "service nginx force-reload"
+```
+
+`nginx config`
+
+```nginx
+  ssl_certificate /usr/local/nginx/ssl/0x64.ml/cert.pem;
+  ssl_certificate_key /usr/local/nginx/ssl/0x64.ml/key.pem;
+```
+
+<https://github.com/acmesh-official/acme.sh/wiki/%E8%AF%B4%E6%98%8E>
+
 > v2ray
+
+<https://github.com/v2fly/fhs-install-v2ray/blob/master/README.zh-Hans-CN.md>
+
+`golang-v2ray-core`
 
 > 内网穿透代理
 
@@ -83,7 +221,22 @@ curl ip.0x64.ml
 > timezone
 
 ```bash
+tzselect
+
 ln -s /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
+vim /etc/timezone
+```
+
+```
+Asia/Shanghai
+```
+
+TODO: 日期为 12 小时制
+
+```bash
+date
+
+Tue 22 Sep 2020 06:26:05 PM CST
 ```
 
 > vim
