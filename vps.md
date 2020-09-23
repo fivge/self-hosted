@@ -34,6 +34,8 @@ lsmod | grep bbr
 
 <https://github.com/fatedier/frp>
 
+## config
+
 ### Users_and_groups
 
 `root`
@@ -100,13 +102,13 @@ PermitRootLogin no
 
 ## application
 
-> ### nginx
+### nginx
+
+> module
 
 <http://nginx.org/en/download.html>
 
-<https://www.digitalocean.com/community/tools/nginx>
-
-[brotli](https://github.com/google/ngx_brotli)
+[brotli]<https://github.com/google/ngx_brotli>
 
 ```bash
 wget http://nginx.org/download/nginx-1.19.2.tar.gz
@@ -124,12 +126,11 @@ apt-get install libpcre3 libpcre3-dev
 apt-get install zlib1g-dev
 apt-get install openssl libssl-dev
 
-./configure --add-module=/usr/local/src/ngx_brotli
-
 ./configure --add-module=/usr/local/src/ngx_brotli --with-http_stub_status_module --with-http_ssl_module --with-http_v2_module
 
 make && make install
 
+# 查看
 nginx -V
 ```
 
@@ -143,22 +144,50 @@ TLS SNI support enabled
 configure arguments: --add-module=/usr/local/src/ngx_brotli --with-http_stub_status_module --with-http_ssl_module --with-http_v2_module
 ```
 
-`迪菲-赫尔曼密钥`
+> systemd
+
+`nginx.service`
+
+```
+[Unit]
+Description=nginx - nginx is nginx
+Documentation=http://nginx.org/en/docs/
+After=network.target remote-fs.target nss-lookup.target
+
+[Service]
+Type=forking
+PIDFile=/usr/local/nginx/logs/nginx.pid
+ExecStartPre=/usr/local/bin/nginx -t
+ExecStart=/usr/local/bin/nginx
+ExecReload=/bin/kill -s HUP $MAINPID
+ExecStop=/bin/kill -s QUIT $MAINPID
+PrivateTmp=true
+
+[Install]
+WantedBy=multi-user.target
+```
 
 ```bash
-openssl dhparam -out /etc/ssl/certs/dhparams.pem 2048
+mkdir -p /etc/systemd/system/nginx.service.d
+printf "[Service]\nExecStartPost=/bin/sleep 0.1\n" > /etc/systemd/system/nginx.service.d/override.conf
+
+systemctl daemon-reload
+systemctl restart nginx.service
 ```
 
-`nginx config`
+> config
 
-```nginx
-  ssl_dhparam /etc/ssl/certs/dhparams.pem;
-  ssl_ciphers "!DSS";
-```
+<https://www.digitalocean.com/community/tools/nginx>
 
-> ### ssl
+> log
+
+### SSL
+
+> acme.sh
 
 <https://github.com/acmesh-official/acme.sh>
+
+<https://github.com/acmesh-official/acme.sh/wiki/%E8%AF%B4%E6%98%8E>
 
 ```bash
 curl  https://get.acme.sh | sh
@@ -176,35 +205,55 @@ acme.sh --installcert -d 0x64.ml \
 --reloadcmd     "service nginx force-reload"
 ```
 
-`nginx config`
+`nginx.config`
 
 ```nginx
   ssl_certificate /usr/local/nginx/ssl/0x64.ml/cert.pem;
   ssl_certificate_key /usr/local/nginx/ssl/0x64.ml/key.pem;
 ```
 
-<https://github.com/acmesh-official/acme.sh/wiki/%E8%AF%B4%E6%98%8E>
+> 迪菲-赫尔曼密钥
 
-> v2ray
+```bash
+openssl dhparam -out /etc/ssl/custom.certs/dhparams.pem 2048
+```
 
-<https://github.com/v2fly/fhs-install-v2ray/blob/master/README.zh-Hans-CN.md>
+`nginx.config`
 
-`golang-v2ray-core`
+```nginx
+  ssl_dhparam /etc/ssl/certs/dhparams.pem;
+```
 
-> 内网穿透代理
+> nginx config
 
-> docker ?
+<https://ssl-config.mozilla.org/>
 
-> github actions
+TODO: `ssl_stapling`
 
-> IP address lookup service
+> test
+
+<https://www.ssllabs.com/ssltest/index.html>
+
+### v2ray
+
+- <https://github.com/v2fly/fhs-install-v2ray/blob/master/README.zh-Hans-CN.md>
+
+- `golang-v2ray-core`(debian)
+
+### 内网穿透代理
+
+### docker ?
+
+### github actions
+
+### IP address lookup service
+
+<https://github.com/mpolden/echoip>
 
 ```bash
 curl ip.gs
 curl ip.0x64.ml
 ```
-
-<https://github.com/mpolden/echoip>
 
 ## secure
 
@@ -244,4 +293,6 @@ Tue 22 Sep 2020 06:26:05 PM CST
 ```
 ;vim显示上下几行
 set relativenumber
+; 粘贴模式
+:set nopaste
 ```
