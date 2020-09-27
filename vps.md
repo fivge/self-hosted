@@ -232,8 +232,8 @@ acme.sh --issue -d 0x64.ml --nginx
 acme.sh --issue -d 0x64.ml -d www.0x64.ml --webroot /var/www/0x64.ml/
 ### installcert
 acme.sh --installcert -d 0x64.ml \
---key-file       /usr/local/nginx/ssl/0x64.ml/key.pem  \
---fullchain-file /usr/local/nginx/ssl/0x64.ml/cert.pem \
+--key-file       /etc/ssl/custom.certs/0x64.ml/key.pem  \
+--fullchain-file /etc/ssl/custom.certs/0x64.ml/cert.pem \
 --reloadcmd     "service nginx force-reload"
 ```
 
@@ -274,7 +274,13 @@ TODO: `ssl_stapling`
 
 ### 内网穿透代理
 
-### docker ?
+### docker
+
+<https://docs.docker.com/engine/install/debian/>
+
+```bash
+docker exec -it shiori sh
+```
 
 ### github actions
 
@@ -291,9 +297,25 @@ curl ip.0x64.ml
 
 书签同步
 
-阅读列表同步
+#### 阅读列表
 
-密码同步
+> shiori
+
+<https://github.com/go-shiori/shiori>
+
+```bash
+docker run -d --rm --name shiori -p 28793:8080 -v /srv/shiori/:/srv/shiori radhifadlillah/shiori
+```
+
+#### 密码同步
+
+```bash
+docker run -d --name bitwarden \
+  -e ADMIN_TOKEN=TOKEN \
+  -v /srv/bitwarden/:/data/ \
+  -p 28941:80 \
+  bitwardenrs/server:latest
+```
 
 网站黑名单同步
 
@@ -306,6 +328,8 @@ curl ip.0x64.ml
 > Fail2Ban
 
 <https://aws.amazon.com/cn/blogs/china/open-source-tool-to-protect-ec2-instances-fail2ban/>
+
+> robots
 
 ## others
 
