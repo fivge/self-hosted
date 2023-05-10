@@ -1,71 +1,89 @@
-```
-  +-------------------------------+
-  v                               v
-+--------+      +-----+  rpc    +----+  ssh    +----+
-|        | <--> | IoT | <.....> | Pi | <.....> | PC |
-|        |      +-----+         +----+         +----+
-|        |                        ^              ^
-| Router |       v2ray            :              |
-|        | <.......................              |
-|        |                                       |
-|        |                                       |
-|        | <-------------------------------------+
-+--------+
-  ^
-  |
-  |
-  v
-+--------+
-|  NAS   |
-+--------+
-```
+# self hosted
 
----
+## 0x01 apps
 
-Server
+#### nginx
 
-- ipv6
-- Github Actions
-- Nginx for static site
-  - blog
-  - demo
-- https://github.com/dani-garcia/bitwarden_rs
-- v2ray
-- frp
+#### acme.sh
 
----
+#### docker
 
-```
-#[Router]{label: "Soft Router\|openwrt\|\(7x24\)"}
+docker
 
-[Router] <-> [NAS],[PC],[Pi],[IoT]
-[PC] <. ssh .> [Pi]
-[Pi] <. rpc .> [IoT]
-[Router] <. v2ray .> [Pi]
+docker compose
 
-#        ->              实线
-#        =>              双实线
-#        .>              点线
-#        ~>              波浪线
-#        - >             虚线
-#        .->             点虚线
-#        ..->            dot-dot-dash
-#        = >             double-dash
+## 0x02 docker apps
 
+#### memos
 
-#[A1] <-> [B1]
-#[A2] => [B2]
-#[A3] .> [B3]
-#[B3] .> [A3]
-#[A4] ~> [B4]
-#[A5] - > [B5]
-#[A6] .-> [B6]
-#[A7] ..-> [B7]
-#[A8] = > [B8]
-```
+https://github.com/usememos/memos
 
-<https://github.com/donnemartin/system-design-primer/blob/master/README-zh-Hans.md#%E6%AF%8F%E4%B8%AA%E7%A8%8B%E5%BA%8F%E5%91%98%E9%83%BD%E5%BA%94%E8%AF%A5%E7%9F%A5%E9%81%93%E7%9A%84%E5%BB%B6%E8%BF%9F%E6%95%B0>
+#### joplin
 
-<https://github.com/fatedier/frp>
+https://www.vultr.com/docs/how-to-host-a-joplin-server-with-docker-on-ubuntu/
 
-`v2ray`
+#### postgresql
+
+`bitnami/postgresql`
+
+#### 💖bitwarden
+
+TODO
+
+https://github.com/dani-garcia/bitwarden_rs
+
+#### shiori
+
+https://github.com/go-shiori/shiori
+
+#### 💖messages server
+
+TODO
+
+https://github.com/centrifugal/centrifugo
+
+https://github.com/gotify/server
+
+#### 💖service status
+
+TODO
+
+https://github.com/TwiN/gatus
+
+https://github.com/louislam/uptime-kuma
+
+#### 💖alist
+
+TODO
+
+https://github.com/alist-org/alist
+
+#### 💫outline
+
+> 团队文档管理
+
+https://github.com/outline/outline
+
+## 0x03 文件管理
+
+文件路径
+
+## 0x04 网络管理
+
+#### 域名
+
+| 域名    | DNS 服务商 |
+| ------- | ---------- |
+| 0x64.ml | cloudflare |
+|         |            |
+|         |            |
+
+#### 端口号
+
+| 端口号 | 服务       | domain         |
+| ------ | ---------- | -------------- |
+| 5230   | memos      | memos.0x64.ml  |
+| 5231   | joplin     | joplin.0x64.ml |
+| 5232   | postgresql | -              |
+
+## 0x05 日志管理
