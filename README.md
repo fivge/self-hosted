@@ -26,6 +26,14 @@ https://www.vultr.com/docs/how-to-host-a-joplin-server-with-docker-on-ubuntu/
 
 `bitnami/postgresql`
 
+> q: https://stackoverflow.com/questions/63924161/postgresql-container-not-starting-chmod-changing-permissions-of-bitnami-post
+
+> a:
+
+```bash
+sudo chown -R 1001:1001 /postgresql
+```
+
 #### 💖bitwarden
 
 TODO
@@ -85,5 +93,7 @@ https://github.com/outline/outline
 | 5230   | memos      | memos.0x64.ml  |
 | 5231   | joplin     | joplin.0x64.ml |
 | 5232   | postgresql | -              |
+| 5233   | shiori     | -              |
+| 5234   | postgresql | -              |
 
 ## 0x05 日志管理

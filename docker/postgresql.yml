@@ -1,0 +1,15 @@
+version: "3"
+
+services:
+  postgresql:
+    image: bitnami/postgresql:latest
+    container_name: postgresql
+    volumes:
+      - /srv/local/postgresql:/bitnami/postgresql
+    ports:
+      - "5232:5432"
+    restart: unless-stopped
+    environment:
+      - POSTGRESQL_USERNAME=${POSTGRESQL_USERNAME}
+      - POSTGRESQL_PASSWORD=${POSTGRESQL_PASSWORD}
+      - POSTGRESQL_DATABASE=${POSTGRESQL_DATABASE}
