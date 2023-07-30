@@ -1,0 +1,24 @@
+version: "3"
+
+services:
+  shiori:
+    image: ghcr.io/go-shiori/shiori
+    container_name: shiori
+    ports:
+      - "5233:8080"
+    volumes:
+      - "/srv/local/shiori:/srv/shiori"
+    restart: unless-stopped
+    environment:
+      SHIORI_DIR: /srv/shiori
+      SHIORI_DBMS: postgresql
+      SHIORI_PG_USER: ${POSTGRES_USER}
+      SHIORI_PG_PASS: ${POSTGRES_PASSWORD}
+      SHIORI_PG_NAME: ${POSTGRES_DATABASE}
+      SHIORI_PG_HOST: ${POSTGRES_HOST}
+      SHIORI_PG_PORT: ${POSTGRES_PORT}
+    networks:
+      - postgresql_default
+networks:
+  postgresql_default:
+    external: true

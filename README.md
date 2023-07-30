@@ -34,6 +34,15 @@ https://www.vultr.com/docs/how-to-host-a-joplin-server-with-docker-on-ubuntu/
 sudo chown -R 1001:1001 /postgresql
 ```
 
+> create database
+
+```bash
+sudo docker exec -it postgresql bash
+psql -U [user] -d [database] --password
+
+CREATE DATABASE [new-database];
+```
+
 #### 💖bitwarden
 
 TODO
@@ -43,6 +52,8 @@ https://github.com/dani-garcia/bitwarden_rs
 #### shiori
 
 https://github.com/go-shiori/shiori
+
+`ghcr.io/go-shiori/shiori`
 
 #### 💖messages server
 
@@ -94,6 +105,5 @@ https://github.com/outline/outline
 | 5231   | joplin     | joplin.0x64.ml |
 | 5232   | postgresql | -              |
 | 5233   | shiori     | -              |
-| 5234   | postgresql | -              |
 
 ## 0x05 日志管理
