@@ -1,0 +1,21 @@
+---
+# For configuration options and examples, please see:
+# https://gethomepage.dev/latest/configs/service-widgets
+
+- logo:
+      icon: https://pic.0x64.in/gween.png
+- datetime:
+      text_size: 4xl
+      format:
+          timeStyle: short
+          hourCycle: h23
+          timeZone: "Asia/Shanghai"
+- greeting:
+      text_size: 2xl
+      text: "We're ephemeral.\n"
+- greeting:
+      text_size: xl
+      text: "It's like I'm only a small reflection of the world I constructed."
+- openmeteo:
+      units: metric # or imperial
+      cache: 30 # Time in minutes to cache API responses, to stay within limits

@@ -1,0 +1,27 @@
+---
+# For configuration options and examples, please see:
+# https://gethomepage.dev/latest/configs/services
+
+- A:
+      - document:
+            href: https://doc.0x64.in
+            icon: notesnook-light.png
+- B:
+      - memos:
+            href: https://memos.0x64.in
+            icon: microsoft-todo.png
+            ping: memos.0x64.in
+- C:
+      - shiori:
+            href: https://shiori.0x64.in
+            icon: shiori.png
+            ping: shiori.0x64.in
+- D:
+      - joplin:
+            href: https://joplin.0x64.in
+            icon: joplin.png
+            ping: joplin.0x64.in
+- E:
+      - github:
+            href: https://github.com/fivge
+            icon: github.png

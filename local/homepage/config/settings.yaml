@@ -1,0 +1,21 @@
+---
+# For configuration options and examples, please see:
+# https://gethomepage.dev/latest/configs/settings
+
+title: "1+2+3=6"
+favicon: https://pic.0x64.in/favicon_io/favicon.ico
+theme: light
+color: white
+language: en
+layout:
+  A:
+    header: false
+  B:
+    header: false
+  C:
+    header: false
+  D:
+    header: false
+  E:
+    header: false
+fiveColumns: true
