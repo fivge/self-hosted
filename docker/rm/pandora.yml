@@ -1,0 +1,14 @@
+version: "3"
+
+services:
+  pandora:
+    image: pengzhile/pandora
+    container_name: pandora
+    restart: unless-stopped
+    ports:
+      - 5234:8080
+    volumes:
+      - "/srv/local/pandora:/srv/pandora"
+    environment:
+      PANDORA_CLOUD: cloud
+      PANDORA_SERVER: 0.0.0.0:8080

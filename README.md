@@ -99,18 +99,16 @@ https://gethomepage.dev/latest/
 | ----------- | ---------- |
 | 0x64.in     | cloudflare |
 | 0x64.in.gen | cloudflare |
-|             |            |
-|             |            |
 
 #### 端口号
 
-| 端口号 | 服务       | domain         |
-| ------ | ---------- | -------------- |
-| 5230   | memos      | memos.0x64.in  |
-| 5231   | joplin     | joplin.0x64.in |
-| 5232   | postgresql | -              |
-| 5233   | shiori     | -              |
-| 5234   | pandora    | -              |
-| 5235   | homepage   | -              |
+| 端口号   | 服务       | domain         |
+| -------- | ---------- | -------------- |
+| 5230     | memos      | memos.0x64.in  |
+| ~~5231~~ | joplin     | joplin.0x64.in |
+| 5232     | postgresql | -              |
+| 5233     | shiori     | -              |
+| ~~5234~~ | pandora    | -              |
+| 5235     | homepage   | -              |
 
 ## 0x05 日志管理
