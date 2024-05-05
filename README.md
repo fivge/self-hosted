@@ -4,6 +4,15 @@
 
 #### nginx
 
+> nginx.service: Failed to parse PID from file /srv/nginx/logs/nginx.pid: Invalid argument
+
+```bash
+mkdir /etc/systemd/system/nginx.service.d
+printf "[Service]\nExecStartPost=/bin/sleep 0.1\n" > /etc/systemd/system/nginx.service.d/override.conf
+systemctl daemon-reload
+systemctl restart nginx
+```
+
 #### acme.sh
 
 #### docker
@@ -87,6 +96,12 @@ https://github.com/outline/outline
 
 https://gethomepage.dev/latest/
 
+#### typesense
+
+> Lightning-fast Open Source Search
+
+https://typesense.org/
+
 ## 0x03 文件管理
 
 文件路径
@@ -110,5 +125,6 @@ https://gethomepage.dev/latest/
 | 5233     | shiori     | -              |
 | ~~5234~~ | pandora    | -              |
 | 5235     | homepage   | -              |
+| 5236     | typesense  | -              |
 
 ## 0x05 日志管理

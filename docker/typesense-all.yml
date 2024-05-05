@@ -1,0 +1,21 @@
+version: "3.4"
+services:
+  typesense:
+    image: typesense/typesense:26.0
+    restart: on-failure
+    ports:
+      - "5236:8108"
+    volumes:
+      - /srv/local/typesense:/data
+    command: "--data-dir /data --api-key=${API_KEY} --enable-cors"
+  docsearch-scraper:
+    image: typesense/docsearch-scraper:latest
+    restart: always
+    volumes:
+      - /srv/local/typesense-scraper:/data
+    environment:
+      - TYPESENSE_API_KEY=${API_KEY}
+      - TYPESENSE_HOST=typesense
+      - TYPESENSE_PORT=8108
+      - TYPESENSE_PROTOCOL=http
+      - CONFIG=/data/typesense.json

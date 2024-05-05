@@ -1,0 +1,13 @@
+version: "3.4"
+services:
+  docsearch-scraper:
+    image: typesense/docsearch-scraper:latest
+    restart: always
+    volumes:
+      - /srv/local/typesense-scraper:/data
+    environment:
+      - TYPESENSE_API_KEY=${API_KEY}
+      - TYPESENSE_HOST=typesense.0x64.in
+      - TYPESENSE_PORT=443
+      - TYPESENSE_PROTOCOL=https
+      - CONFIG=/data/typesense.json
