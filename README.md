@@ -27,11 +27,11 @@ docker compose
 
 https://github.com/usememos/memos
 
-#### joplin
+#### ~~joplin~~
 
 https://www.vultr.com/docs/how-to-host-a-joplin-server-with-docker-on-ubuntu/
 
-#### postgresql
+#### ~~postgresql~~
 
 `bitnami/postgresql`
 
@@ -128,3 +128,13 @@ https://typesense.org/
 | 5236     | typesense  | -              |
 
 ## 0x05 日志管理
+
+## 0x06 public services
+
+#### Joplin
+
+[Joplin + cloudflare R2](./public_services/joplin.md)
+
+#### 图床
+
+[cloudflare R2](./public_services/图床.md)
